@@ -39,9 +39,9 @@ public class StoreUI {
         String pCategory = in.nextLine();
 
         System.out.println("Give the quantity:");
-        int pQunatity = Integer.parseInt(in.nextLine());
+        int pQuantity = Integer.parseInt(in.nextLine());
 
-        Product p = new Product(pCode,pName,pCategory,pQunatity);
+        Product p = new Product(pCode,pName,pCategory,pQuantity);
         ctrl.addProduct(p);
         System.out.println("Product Added");
     }

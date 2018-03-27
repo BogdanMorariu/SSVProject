@@ -7,10 +7,10 @@ import repository.StoreRepository;
 import model.Product;
 
 public class StoreController { 
-	StoreRepository io =new StoreRepository();	
+	StoreRepository io = new StoreRepository("products.txt");
 	public void readProducts(String f){
 		try {
-			io.readFile(f);
+			io.readFile();
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -22,7 +22,6 @@ public class StoreController {
 	
 	public void addProduct(Product p){
 		try {
-
 			io.addNewProduct(p);
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block

@@ -1,24 +1,25 @@
 package repository;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 
 import model.Product;
 
 public class StoreRepository {
-	private ArrayList<Product> allProducts=new ArrayList<Product>(); 	
+	private ArrayList<Product> allProducts;
+	private String filename;
 	
 	public ArrayList<Product> getAllProducts() {
 		return allProducts;
 	}
-	public void readFile(String fname) throws NumberFormatException, IOException{
-		FileInputStream f=new FileInputStream(fname);
+
+	public StoreRepository(String filename) {
+		allProducts = new ArrayList<Product>();
+		this.filename = filename;
+	}
+
+	public void readFile() throws NumberFormatException, IOException{
+		FileInputStream f=new FileInputStream(filename);
 		DataInputStream in = new DataInputStream(f);
 		BufferedReader buf =new BufferedReader(new InputStreamReader(in));
 		String rd;
@@ -30,8 +31,9 @@ public class StoreRepository {
 		in.close();
 	}
 	public String addNewProduct(Product p) throws IOException{
-		if(p.getCode()>0 && p.getQuantity()>=0 && p.getCode()<Integer.MAX_VALUE&&p.getQuantity()<Integer.MAX_VALUE&& !illegal(p.getName())){
-			BufferedWriter out = new BufferedWriter(new FileWriter("products.txt",true));
+
+		if(p.getCode()>0 && p.getQuantity()>=0 && p.getCode()<=Integer.MAX_VALUE && p.getQuantity()<=Integer.MAX_VALUE&& !illegal(p.getName())){
+			BufferedWriter out = new BufferedWriter(new FileWriter(filename,true));
 			int k=1;
 			for(Product i:allProducts){
 				if(i.getCode()==p.getCode()){
@@ -45,7 +47,6 @@ public class StoreRepository {
 				allProducts.add(p);
 			}
 			else{
-				System.err.println("This code already exists");
 				out.close();
 				return("This code already exists");
 			}
@@ -57,6 +58,8 @@ public class StoreRepository {
 	}
 
 	private boolean illegal(String name) {
+	    if(name.isEmpty())
+	        return true;
 		char c;
 		for(int i=0;i<name.length();++i) {
 			c = name.charAt(i);
@@ -85,6 +88,12 @@ public class StoreRepository {
 	}
 	public ArrayList<Product> stockSituation() {
 		return allProducts;
+	}
+
+	public void clearFile() throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(filename);
+		pw.write("7 test test 0");
+		pw.close();
 	}
 	
 }
