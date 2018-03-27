@@ -124,6 +124,26 @@ public class StoreRepositoryTest {
         assertTrue(productRepo.getAllProducts().size()==size);
     }
 
+    @Test
+    public void testGetProductsByCategory1() throws IOException {
+        StoreRepository testRepo = new StoreRepository("testFile");
+        testRepo.addNewProduct(new Product(101,"dummy","test1",1));
+        testRepo.addNewProduct(new Product(102,"dummy","test1",1));
+        testRepo.addNewProduct(new Product(103,"dummy","test2",1));
+        List<Product> testList = testRepo.getProductsCategory("test1");
+        assertEquals(2,testList.size());
+        testRepo.clearFile();
+    }
+
+    @Test
+    public void testGetProductsByCategory2() throws IOException {
+        StoreRepository testRepo = new StoreRepository("testFile");
+        List<Product> testList = new ArrayList<Product>();
+        testList = testRepo.getProductsCategory("test1");
+        assertEquals(0,testList.size());
+        testRepo.clearFile();
+    }
+
     @After
     public void destroy(){
         try {
