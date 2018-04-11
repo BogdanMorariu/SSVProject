@@ -86,13 +86,14 @@ public class StoreRepository {
 				prods.add(p);
 		return prods;
 	}
+
 	public ArrayList<Product> stockSituation() {
 		return allProducts;
 	}
 
 	public void clearFile() throws FileNotFoundException {
 		PrintWriter pw = new PrintWriter(filename);
-		pw.write("7 test test 0");
+		pw.write("");
 		pw.close();
 	}
 	

@@ -118,10 +118,11 @@ public class StoreRepositoryTest {
 
     @Test
     public void addNewProductTC12() throws IOException {
-        int size = productRepo.getAllProducts().size();
-        assertTrue(productRepo.getAllProducts().size()==size);
+        assertTrue(productRepo.getAllProducts().size()==0);
+        productRepo.addNewProduct(new Product(7,"test","test",7));
         productRepo.addNewProduct(new Product(7,"milk","lactate",1));
-        assertTrue(productRepo.getAllProducts().size()==size);
+        assertTrue(productRepo.getAllProducts().size()==1);
+        productRepo.clearFile();
     }
 
     @Test
@@ -141,6 +142,42 @@ public class StoreRepositoryTest {
         List<Product> testList = new ArrayList<Product>();
         testList = testRepo.getProductsCategory("test1");
         assertEquals(0,testList.size());
+        testRepo.clearFile();
+    }
+
+    @Test
+    public void testGetProductsByCategoryTC1() throws IOException {
+        StoreRepository testRepo = new StoreRepository("testFile");
+        testRepo.addNewProduct(new Product(101,"dummy","milk",1));
+        List<Product> testList = testRepo.getProductsCategory("milk");
+        assertEquals(1,testList.size());
+        testRepo.clearFile();
+    }
+
+    @Test
+    public void testGetProductsByCategoryTC2() throws IOException {
+        StoreRepository testRepo = new StoreRepository("testFile");
+        List<Product> testList = testRepo.getProductsCategory("test");
+        assertEquals(0,testList.size());
+        testRepo.clearFile();
+    }
+
+    @Test
+    public void testGetProductsByCategoryTC3() throws IOException {
+        StoreRepository testRepo = new StoreRepository("testFile");
+        testRepo.addNewProduct(new Product(101,"dummy","milk",1));
+        List<Product> testList = testRepo.getProductsCategory("meat");
+        assertEquals(0,testList.size());
+        testRepo.clearFile();
+    }
+
+    @Test
+    public void testGetProductsByCategoryTC4() throws IOException {
+        StoreRepository testRepo = new StoreRepository("testFile");
+        testRepo.addNewProduct(new Product(101,"dummy","milk",1));
+        testRepo.addNewProduct(new Product(102,"dummy","meat",1));
+        List<Product> testList = testRepo.getProductsCategory("meat");
+        assertEquals(1,testList.size());
         testRepo.clearFile();
     }
 
