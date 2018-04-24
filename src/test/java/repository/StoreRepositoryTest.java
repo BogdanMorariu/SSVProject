@@ -198,6 +198,24 @@ public class StoreRepositoryTest {
         testStockSituation();
     }
 
+    @Test
+    public void incrementTestA() throws IOException {
+        addNewProductTC1();
+    }
+
+    @Test
+    public void incrementTestAB() throws IOException {
+        addNewProductTC1();
+        testGetProductsByCategoryTC1();
+    }
+
+    @Test
+    public void incrementTestABC() throws IOException {
+        addNewProductTC1();
+        testGetProductsByCategoryTC1();
+        testStockSituation();
+    }
+
     @After
     public void destroy(){
         try {
