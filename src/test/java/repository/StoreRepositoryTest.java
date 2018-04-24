@@ -181,6 +181,23 @@ public class StoreRepositoryTest {
         testRepo.clearFile();
     }
 
+    @Test
+    public void testStockSituation() throws IOException {
+        StoreRepository testRepo = new StoreRepository("testFile");
+        testRepo.addNewProduct(new Product(101,"dummy","milk",1));
+        testRepo.addNewProduct(new Product(102,"dummy","meat",1));
+        List<Product> testList = testRepo.stockSituation();
+        assertEquals(2,testList.size());
+        testRepo.clearFile();
+    }
+
+    @Test
+    public void integrationTest() throws IOException{
+        addNewProductTC1();
+        testGetProductsByCategoryTC1();
+        testStockSituation();
+    }
+
     @After
     public void destroy(){
         try {
